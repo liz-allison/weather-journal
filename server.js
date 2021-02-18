@@ -8,7 +8,7 @@ const express = require('express');
 const app = express();
 
 //Dependencies
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 //Middleware
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,21 +22,22 @@ app.use(cors());
 app.use(express.static('website'));  
 
 //GET route to return endpoint data
-app.get('/', (req, res) => {
+app.get('/', (req, res) => {  /* '/all' instead?*/
     res.send(projectData);
 });
 
 // POST route to store data
 const data = [];
-app.post('/', addZipAndFeelings);
+app.post('/', addZipAndFeelings); /* '/storeData' instead?*/
 
 function addZipAndFeelings (req,res){
     data.push(req.body);
-};
+}
 
 // Setup Server
-const port = 8000
+const port = 8000;
 
 //Callback
 const server = app.listen(port, ()=> {
-    console.log(`running on localhost: ${port}`)});  
+    console.log(`running on localhost: ${port}`);
+});  
