@@ -5,7 +5,7 @@ const content = document.getElementById('content');
 
 //Use of API to access weather database
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
-const apiKey = '3c695c0303609cf395d095d701f8ad45';
+const apiKey = ',us&appid=3c695c0303609cf395d095d701f8ad45';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -15,35 +15,36 @@ let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 document.getElementById('generate').addEventListener('click', performAction);
 
 function performAction(e) {
+    e.preventDefault();
     const newZip = document.getElementById('zip').value;
-    const feelings = document.getElementById('feelings').value;
-    fetchWeather(baseURL, newZip, apiKey);
+    const content = document.getElementById('feelings').value;
+    fetchWeather(baseURL, newZip, apiKey)
 
-    then(function(data) {
-        console.log(data);
+    .then(function(inputData) {
+        console.log(data); //newData or postData???
 
-    postData('/', {date:newDate, temp:data.main.temp, content:content}); /* '/add' instead?*/
+    postData('/addInfo', {date:newDate, temp:inputData.main.temp, content:content}); /* '/add' instead?*/
     })
-    then(function(newData) {
+    .then(function(newData) {
         updateUI(); 
-    })
+    });
 }
 
-//GET request to weather info API
+//GET request to weather API info on the web
 const fetchWeather = async(baseURL, newZip, apiKey) => {
     const res = await fetch(baseURL + newZip + apiKey);
     try {
-        const data = await res.json();
+        const inputData = await res.json();
         console.log(data);
-        return data;
-    } catch (error) {
+        return inputData;
+    }
+    catch (error) {
         console.log("error", error);
     }
-    updateUI()
 }
 
 //Async POST
-const postData = async ( url = '', data = {})=>{
+const postData = async ( url = '/addInfo', data = {})=>{
 
     const response = await fetch(url, {
     method: 'POST', 
@@ -51,13 +52,19 @@ const postData = async ( url = '', data = {})=>{
     headers: {
         'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data), // body data type must match "Content-Type" header        
+    body: JSON.stringify({ // body data type must match "Content-Type" header 
+        date: data.date,
+        temp: data.temp,
+        content: data.content,
+    })        
   });
 
     try {
       const newData = await response.json();
+      console.log(newData);
       return newData;
-    }catch(error) {
+    }
+    catch(error) {
     console.log("error", error);
     }
 };

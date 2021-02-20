@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData = {};
+const projectData = {};
 
 // Require Express to run server and routes
 const express = require('express');
@@ -18,21 +18,8 @@ app.use(bodyParser.json());
 const cors = require('cors');
 app.use(cors());
 
-// Initialize the main project folder(folder names is "website")
+// Initialize the main project folder(folder names is "website"). This connects the local server to the client side code.
 app.use(express.static('website'));  
-
-//GET route to return endpoint data
-app.get('/', (req, res) => {  /* '/all' instead?*/
-    res.send(projectData);
-});
-
-// POST route to store data
-const data = [];
-app.post('/', addZipAndFeelings); /* '/storeData' instead?*/
-
-function addZipAndFeelings (req,res){
-    data.push(req.body);
-}
 
 // Setup Server
 const port = 8000;
@@ -41,3 +28,20 @@ const port = 8000;
 const server = app.listen(port, ()=> {
     console.log(`running on localhost: ${port}`);
 });  
+
+//GET route to return endpoint data. Whenever the homepage is visited,
+//the GET request is triggered, and a long string of data is returned
+app.get('/', (req, res) => {  /* '/all' instead?*/
+    res.send(projectData);
+});
+
+// POST route to store data to then be used in the future, 
+//and accessed through a get request
+const data = [];
+app.post('/addInfo', addInfo); 
+
+function addInfo (req, res){
+    console.log(req.body)
+    data.push(req.body); /*adds the body of the request to the data array*/
+}
+
