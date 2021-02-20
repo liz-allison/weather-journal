@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-const projectData = {};
+projectData = {};
 
 // Require Express to run server and routes
 const express = require('express');
@@ -31,7 +31,7 @@ const server = app.listen(port, ()=> {
 
 //GET route to return endpoint data. Whenever the homepage is visited,
 //the GET request is triggered, and a long string of data is returned
-app.get('/', (req, res) => {  /* '/all' instead?*/
+app.get('', (req, res) => {  /* '/all' instead?*/
     res.send(projectData);
 });
 
@@ -41,7 +41,11 @@ const data = [];
 app.post('/addInfo', addInfo); 
 
 function addInfo (req, res){
-    console.log(req.body)
-    data.push(req.body); /*adds the body of the request to the data array*/
+    projectData['date'] = req.body.date;
+    projectData['temp'] = req.body.temp;
+    projectData['content'] = req.body.content;
+    res.send(projectData); /*adds to the data array*/
 }
+
+
 

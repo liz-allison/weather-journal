@@ -21,11 +21,9 @@ function performAction(e) {
     fetchWeather(baseURL, newZip, apiKey)
 
     .then(function(inputData) {
-        console.log(data); //newData or postData???
-
-    postData('/addInfo', {date:newDate, temp:inputData.main.temp, content:content}); /* '/add' instead?*/
+        postData('/addInfo', {date:newDate, temp:inputData.main.temp, content});
     })
-    .then(function(newData) {
+    .then(function() {
         updateUI(); 
     });
 }
@@ -35,7 +33,6 @@ const fetchWeather = async(baseURL, newZip, apiKey) => {
     const res = await fetch(baseURL + newZip + apiKey);
     try {
         const inputData = await res.json();
-        console.log(data);
         return inputData;
     }
     catch (error) {
@@ -52,11 +49,7 @@ const postData = async ( url = '/addInfo', data = {})=>{
     headers: {
         'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ // body data type must match "Content-Type" header 
-        date: data.date,
-        temp: data.temp,
-        content: data.content,
-    })        
+    body: JSON.stringify(data), // body data type must match "Content-Type" header        
   });
 
     try {
@@ -75,9 +68,9 @@ const updateUI = async () => {
     try {
         const allData = await request.json()
         console.log(allData);
-    document.getElementById('date').innerHTML = allData[0].date;
-    document.getElementById('temp').innerHTML = allData[0].temp;
-    document.getElementById('content').innerHTML = allData[0].content;    
+        document.getElementById('date').innerHTML = allData[0].date;
+        document.getElementById('temp').innerHTML = allData[0].temp;
+        document.getElementById('content').innerHTML = allData[0].content;    
     
     }catch(error){
         console.log("error", error)
