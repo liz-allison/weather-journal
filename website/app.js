@@ -5,7 +5,7 @@ const content = document.getElementById('content');
 
 //Use of API to access weather database
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
-const apiKey = 'appid=3c695c0303609cf395d095d701f8ad45';
+const apiKey = '&appid=3c695c0303609cf395d095d701f8ad45';  //&units=imperial
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -23,9 +23,10 @@ function performAction(e) {
     .then(function(inputData) {
         postData('/saveWeatherData', {date:newDate, temp:inputData.main.temp, content});
     })
-    .then(function() {
+    .then(function(updatedData) {
         updateUI(); 
     });
+    form.reset(); //once running see if this is beneficial
 }
 
 //GET request to weather API info on the web
@@ -43,18 +44,22 @@ const fetchWeather = async(baseURL, newZip, apiKey) => {
 //Async POST
 const postData = async ( url = '', data = {})=>{
 
-    const response = await fetch(url, {
+    const request = await fetch(url, {
     method: 'POST', 
     credentials: 'same-origin', 
     headers: {
         'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data), // body data type must match "Content-Type" header        
+    body: JSON.stringify({ // body data type must match "Content-Type" header 
+        date: data.date,
+        temp: data.temp,
+        content: data.content
+    })        
   });
 
     try {
-      const newData = await response.json();
-      console.log(newData);
+      const newData = await request.json();
+      //console.log(newData);
       return newData;
     }
     catch(error) {
@@ -68,9 +73,9 @@ const updateUI = async () => {
     try {
         const allData = await request.json()
         console.log(allData);
-        document.getElementById('date').innerHTML = allData[0].date;
-        document.getElementById('temp').innerHTML = allData[0].temp;
-        document.getElementById('content').innerHTML = allData[0].content;    
+        document.getElementById('date').innerHTML = allData.date;
+        document.getElementById('temp').innerHTML = allData.temp;
+        document.getElementById('content').innerHTML = allData.content;    
     
     }catch(error){
         console.log("error", error)

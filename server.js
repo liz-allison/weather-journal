@@ -37,15 +37,17 @@ app.get('/fetchWeatherData', (req, res) => {
 
 // POST route to store data to then be used in the future, 
 //and accessed through a get request
-const data = [];
+//const data = [];
 app.post('/saveWeatherData', saveWeatherData); 
 
 function saveWeatherData (req, res){
     projectData['date'] = req.body.date;
     projectData['temp'] = req.body.temp;
     projectData['content'] = req.body.content;
-    res.send(projectData); /*adds to the data array*/
+    res.send(projectData);
 }
+
+
 
 
 
