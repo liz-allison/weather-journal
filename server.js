@@ -31,16 +31,16 @@ const server = app.listen(port, ()=> {
 
 //GET route to return endpoint data. Whenever the homepage is visited,
 //the GET request is triggered, and a long string of data is returned
-app.get('', (req, res) => {  /* '/all' instead?*/
+app.get('/fetchWeatherData', (req, res) => {
     res.send(projectData);
 });
 
 // POST route to store data to then be used in the future, 
 //and accessed through a get request
 const data = [];
-app.post('/addInfo', addInfo); 
+app.post('/saveWeatherData', saveWeatherData); 
 
-function addInfo (req, res){
+function saveWeatherData (req, res){
     projectData['date'] = req.body.date;
     projectData['temp'] = req.body.temp;
     projectData['content'] = req.body.content;

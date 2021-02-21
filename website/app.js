@@ -5,7 +5,7 @@ const content = document.getElementById('content');
 
 //Use of API to access weather database
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
-const apiKey = ',us&appid=3c695c0303609cf395d095d701f8ad45';
+const apiKey = 'appid=3c695c0303609cf395d095d701f8ad45';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -21,7 +21,7 @@ function performAction(e) {
     fetchWeather(baseURL, newZip, apiKey)
 
     .then(function(inputData) {
-        postData('/addInfo', {date:newDate, temp:inputData.main.temp, content});
+        postData('/saveWeatherData', {date:newDate, temp:inputData.main.temp, content});
     })
     .then(function() {
         updateUI(); 
@@ -41,7 +41,7 @@ const fetchWeather = async(baseURL, newZip, apiKey) => {
 }
 
 //Async POST
-const postData = async ( url = '/addInfo', data = {})=>{
+const postData = async ( url = '', data = {})=>{
 
     const response = await fetch(url, {
     method: 'POST', 
@@ -64,7 +64,7 @@ const postData = async ( url = '/addInfo', data = {})=>{
 
 //Update UI
 const updateUI = async () => {
-    const request = await fetch('/') /* '/all' instead?*/
+    const request = await fetch('/fetchWeatherData') 
     try {
         const allData = await request.json()
         console.log(allData);
