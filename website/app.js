@@ -1,7 +1,6 @@
 //Global Variables
-const date = document.getElementById('date');
-const temp = document.getElementById('temp');
-const content = document.getElementById('content');
+const date = document.getElementById('date').value;
+const temp = document.getElementById('temp').value;
 
 //Use of API to access weather database
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
@@ -21,12 +20,12 @@ function performAction(e) {
     fetchWeather(baseURL, newZip, apiKey)
 
     .then(function(inputData) {
-        postData('/saveWeatherData', {date:newDate, temp:inputData.main.temp, content});
+        postData('/saveWeatherData', {date:newDate, temp:inputData.temp, content});
     })
     .then(function(updatedData) {
         updateUI(); 
     });
-    form.reset(); //once running see if this is beneficial
+    //form.reset();
 }
 
 //GET request to weather API info on the web
