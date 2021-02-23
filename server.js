@@ -34,7 +34,8 @@ const server = app.listen(port, ()=> {
 app.get('/fetchWeatherData', fetchWeatherData);
     
 function fetchWeatherData (request, response) {
-    response.send(projectData); //GET request from /fetchWeatherData
+    console.log(projectData)
+    response.send(projectData) //GET request from /fetchWeatherData
 });
 
 // POST route to store data to then be used in the future, 
@@ -43,11 +44,13 @@ function fetchWeatherData (request, response) {
 app.post('/saveWeatherData', saveWeatherData);
 
 function saveWeatherData (request, response){
-    projectData.date = request.body.date; //alternate is projectData['date'] = req.body.date;
-    projectData.temperature = request.body.temperature;
-    projectData.content = request.body.content;
-    console.log(projectData);
-    response.send(projectData); //POST request to /saveWeatherData
+    const newData = {
+    date = request.body.date; //alternate is projectData['date'] = req.body.date;
+    temp = request.body.temp;
+    feelings = request.body.feelings; //content or feelings?
+    //console.log(projectData);
+    //response.send(projectData); //POST request to /saveWeatherData
+    }    
 }
 
 

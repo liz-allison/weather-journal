@@ -1,6 +1,6 @@
 //Global Variables
 const date = document.getElementById('date').value;
-const temperature = document.getElementById('temp').value;
+const temp = document.getElementById('temp').value;
 
 //Use of API to access weather database
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
@@ -19,9 +19,9 @@ function performAction(e) {
     const content = document.getElementById('feelings').value;
     getTemperature (baseURL, newZip, apiKey)
         .then(function(inputData) {
-            postData('/saveWeatherData', {date:newDate, temperature:inputData.main.temperature, content});
+            postData('/saveWeatherData', {date:newDate, temp:inputData.main.temp, content});
         })
-        .then(function() {
+        .then(function(newData) {
             updateUI(); 
         });
     //form.reset();    is this needed?
@@ -30,10 +30,10 @@ function performAction(e) {
 //GET request to weather API info on the web
 const getTemperature = async(baseURL, newZip, apiKey) => {
     const response = await fetch(baseURL + newZip + apiKey);
-    console.log(response);
+    //console.log(response);
     try {
         const inputData = await response.json();
-        console.log(inputData);
+        //console.log(inputData);
         return inputData;
     }
     catch (error) {
@@ -49,16 +49,16 @@ const postData = async ( url = '', data = {})=>{
     headers: {
         'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data // body data type must match "Content-Type" header 
-        //{date: data.date,
-        //temperature: data.temperature,
-        //content: data.content}
-    )        
+    body: JSON.stringify({ // body data type must match "Content-Type" header 
+        date: data.date,
+        temp: data.temp,
+        content: data.content
+    })        
   });
 
     try {
         const newData = await request.json();
-        //console.log(newData);
+        console.log(newData);
         return newData;
     }
     catch(error) {
@@ -73,7 +73,7 @@ const updateUI = async () => {
         const allData = await request.json()
         console.log(allData);
         document.getElementById('date').innerHTML = allData.date;
-        document.getElementById('temperature').innerHTML = allData.temperature;
+        document.getElementById('temp').innerHTML = allData.temp;
         document.getElementById('content').innerHTML = allData.content;    
     
     }catch(error){
