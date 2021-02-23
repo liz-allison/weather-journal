@@ -1,6 +1,6 @@
 //Global Variables
 const date = document.getElementById('date').value;
-const temp = document.getElementById('temp').value;
+const temperature = document.getElementById('temp').value;
 
 //Use of API to access weather database
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
@@ -17,22 +17,23 @@ function performAction(e) {
     e.preventDefault();
     const newZip = document.getElementById('zip').value;
     const content = document.getElementById('feelings').value;
-    fetchWeather(baseURL, newZip, apiKey)
-
-    .then(function(inputData) {
-        postData('/saveWeatherData', {date:newDate, temp:inputData.temp, content});
-    })
-    .then(function(updatedData) {
-        updateUI(); 
-    });
-    //form.reset();
+    getTemperature (baseURL, newZip, apiKey)
+        .then(function(inputData) {
+            postData('/saveWeatherData', {date:newDate, temperature:inputData.main.temperature, content});
+        })
+        .then(function() {
+            updateUI(); 
+        });
+    //form.reset();    is this needed?
 }
 
 //GET request to weather API info on the web
-const fetchWeather = async(baseURL, newZip, apiKey) => {
-    const res = await fetch(baseURL + newZip + apiKey);
+const getTemperature = async(baseURL, newZip, apiKey) => {
+    const response = await fetch(baseURL + newZip + apiKey);
+    console.log(response);
     try {
-        const inputData = await res.json();
+        const inputData = await response.json();
+        console.log(inputData);
         return inputData;
     }
     catch (error) {
@@ -42,27 +43,26 @@ const fetchWeather = async(baseURL, newZip, apiKey) => {
 
 //Async POST
 const postData = async ( url = '', data = {})=>{
-
     const request = await fetch(url, {
     method: 'POST', 
     credentials: 'same-origin', 
     headers: {
         'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ // body data type must match "Content-Type" header 
-        date: data.date,
-        temp: data.temp,
-        content: data.content
-    })        
+    body: JSON.stringify(data // body data type must match "Content-Type" header 
+        //{date: data.date,
+        //temperature: data.temperature,
+        //content: data.content}
+    )        
   });
 
     try {
-      const newData = await request.json();
-      //console.log(newData);
-      return newData;
+        const newData = await request.json();
+        //console.log(newData);
+        return newData;
     }
     catch(error) {
-    console.log("error", error);
+        console.log("error", error);
     }
 };
 
@@ -73,7 +73,7 @@ const updateUI = async () => {
         const allData = await request.json()
         console.log(allData);
         document.getElementById('date').innerHTML = allData.date;
-        document.getElementById('temp').innerHTML = allData.temp;
+        document.getElementById('temperature').innerHTML = allData.temperature;
         document.getElementById('content').innerHTML = allData.content;    
     
     }catch(error){
