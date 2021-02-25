@@ -4,7 +4,7 @@ const temp = document.getElementById('temp').value;
 
 //Use of API to access weather database
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
-const apiKey = '&appid=3c695c0303609cf395d095d701f8ad45';  //&units=imperial
+const apiKey = '&appid=6e381fb440fb6a71c301f150e40464d3';  //&units=imperial
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -19,7 +19,7 @@ function performAction(e) {
     const content = document.getElementById('feelings').value;
     getTemperature (baseURL, newZip, apiKey)
         .then(function(inputData) {
-            postData('/saveWeatherData', {date:newDate, temp:inputData.main.temp, content});
+            postData('/saveWeatherData', {date:newDate, temp:/*inputData.main.*/temp, content});
         })
         .then(function(newData) {
             updateUI(); 
