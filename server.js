@@ -44,15 +44,11 @@ app.post('/saveWeatherData', (req, res) => {
         temp: req.body.temp,
         content: req.body.content
     }
-    /*projectData['date'] = req.body.date;
+    projectData = newData;
+    res.send(newData);
+    //projectData.push(req.body);
+    /*const newData = {
+    projectData['date'] = req.body.date;
     projectData['temp'] = req.body.temp;
-    projectData['content'] = req.body.content;
-    res.send(projectData);*/
+    projectData['content'] = req.body.content;} */
 });
-
-
-
-
-
-
-
