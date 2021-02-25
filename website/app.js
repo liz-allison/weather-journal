@@ -19,7 +19,7 @@ function performAction(e) {
     const content = document.getElementById('feelings').value;
     getTemperature (baseURL, newZip, apiKey)
         .then(function(inputData) {
-            postData('/saveWeatherData', {date:newDate, temp:/*inputData.main.*/temp, content});
+            postData('/saveWeatherData', {date:newDate, temp:inputData.main.temp, content});
         })
         .then(function(newData) {
             updateUI(); 

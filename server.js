@@ -25,35 +25,32 @@ app.use(express.static('website'));
 const port = 8000;
 
 //Callback
-const server = app.listen(port, ()=> {
-    console.log(`running on localhost: ${port}`);
+const server = app.listen(port, () => {
+    console.log(`running on localhost: ${port}`)
 });  
 
 //GET route to return endpoint data. Whenever the homepage is visited,
 //the GET request is triggered, and a long string of data is returned
-app.get('/fetchWeatherData', fetchWeatherData);
-    
-function fetchWeatherData (request, response) {
+app.get('/fetchWeatherData', (req, res) => {
     console.log(projectData)
-    response.send(projectData) //GET request from /fetchWeatherData
-};
+    res.send(projectData)
+});
 
 // POST route to store data to then be used in the future, 
 //and accessed through a get request
-//const data = [];
-app.post('/saveWeatherData', saveWeatherData);
-
-function saveWeatherData (request, response){
-    //console.log(request.body)
+app.post('/saveWeatherData', (req, res) => {
     const newData = {
-        date: request.body.date, 
-        temp: request.body.temp,
-        content: request.body.content //content or feelings?
+        date: req.body.date, 
+        temp: req.body.temp,
+        content: req.body.content
     }
-    //projectData = newData;
-    //response.send(projectData);
-    //console.log(projectData);
-}
+    /*projectData['date'] = req.body.date;
+    projectData['temp'] = req.body.temp;
+    projectData['content'] = req.body.content;
+    res.send(projectData);*/
+});
+
+
 
 
 
