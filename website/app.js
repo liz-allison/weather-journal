@@ -26,7 +26,7 @@ function performAction(e) {
         })
         .catch(function(error) {
             console.log(error);
-          });
+        });
 }
 
 //GET request to weather API info on the web
@@ -56,7 +56,6 @@ const postData = async ( url = '', data = {})=>{
         content: data.content
     })        
   });
-
     try {
         const newData = await request.json();
         console.log(newData);
@@ -75,8 +74,8 @@ const updateUI = async () => {
         document.getElementById('date').innerHTML = allData.date;
         document.getElementById('temp').innerHTML = allData.temp + " degrees Fahrenheit";
         document.getElementById('content').innerHTML = allData.content;    
-    
-    }catch(error){
+    }
+    catch(error){
         console.log("error", error)
     }
 }
