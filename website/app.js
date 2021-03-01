@@ -71,7 +71,7 @@ const updateUI = async () => {
     const request = await fetch('/fetchWeatherData') 
     try {
         const allData = await request.json()
-        console.log(allData);
+        //console.log(allData); /*returns error in console*/
         document.getElementById('date').innerHTML = allData.date;
         document.getElementById('temp').innerHTML = allData.temp;
         document.getElementById('content').innerHTML = allData.content;    
