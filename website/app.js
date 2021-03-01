@@ -4,7 +4,7 @@ const temp = document.getElementById('temp').value;
 
 //Use of API to access weather database
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
-const apiKey = '&appid=6e381fb440fb6a71c301f150e40464d3';  //&units=imperial
+const apiKey = '&appid=6e381fb440fb6a71c301f150e40464d3&units=imperial';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -19,12 +19,14 @@ function performAction(e) {
     const content = document.getElementById('feelings').value;
     getTemperature (baseURL, newZip, apiKey)
         .then(function(inputData) {
-            postData('/saveWeatherData', {date:newDate, temp:/*inputData.main.*/temp, content:content});
+            postData('/saveWeatherData', {date:newDate, temp:inputData.main.temp, content:content});
         })
         .then(function(newData) {
             updateUI(); 
-        });
-    //form.reset();    is this needed?
+        })
+        .catch(function(error) {
+            console.log(error);
+          });
 }
 
 //GET request to weather API info on the web
@@ -33,7 +35,6 @@ const getTemperature = async(baseURL, newZip, apiKey) => {
     //console.log(response);
     try {
         const inputData = await response.json();
-        //console.log(inputData);
         return inputData;
     }
     catch (error) {
@@ -71,7 +72,6 @@ const updateUI = async () => {
     const request = await fetch('/fetchWeatherData') 
     try {
         const allData = await request.json()
-        //console.log(allData); /*returns error in console*/
         document.getElementById('date').innerHTML = allData.date;
         document.getElementById('temp').innerHTML = allData.temp;
         document.getElementById('content').innerHTML = allData.content;    

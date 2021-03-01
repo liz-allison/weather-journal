@@ -39,16 +39,8 @@ app.get('/fetchWeatherData', (req, res) => {
 // POST route to store data to then be used in the future, 
 //and accessed through a get request
 app.post('/saveWeatherData', (req, res) => {
-    const newData = {
-        date: req.body.date, 
-        temp: req.body.temp,
-        content: req.body.content
-    }
-    projectData = newData;
-    res.send(newData);
-    //projectData.push(req.body);
-    /*const newData = {
-    projectData['date'] = req.body.date;
-    projectData['temp'] = req.body.temp;
-    projectData['content'] = req.body.content;} */
+    projectData.date = req.body.date;
+    projectData.temp = req.body.temp;
+    projectData.content = req.body.content;
+    res.send(projectData)
 });
