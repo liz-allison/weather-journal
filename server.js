@@ -22,7 +22,7 @@ app.use(cors());
 app.use(express.static('website'));  
 
 // Setup Server
-const port = 8000;
+const port = 8080;
 
 //Callback
 const server = app.listen(port, () => {
