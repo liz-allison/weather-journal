@@ -8,7 +8,7 @@ const apiKey = '&appid=6e381fb440fb6a71c301f150e40464d3&units=imperial';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+let newDate = d.getMonth() + 1 +'.'+ d.getDate()+'.'+ d.getFullYear();
 
 //Activate event listener with generate button
 document.getElementById('generate').addEventListener('click', performAction);
