@@ -20,11 +20,16 @@ body{
     width: 50vw;
 }
 
+#feelings {
+    position: relative;
+    width: 100%;
+}
+
 .entry{
     background: rgba(59, 74, 107, .4);
 }
 
-#entryHolder{
+#entryHolder {
     
 }
 

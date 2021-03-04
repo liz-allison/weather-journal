@@ -8,7 +8,8 @@ const apiKey = '&appid=6e381fb440fb6a71c301f150e40464d3&units=imperial';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth() + 1 +'.'+ d.getDate()+'.'+ d.getFullYear();
+let newDate = d.getMonth() + 1 + '.'+ d.getDate()+'.'+ d.getFullYear();
+
 
 //Activate event listener with generate button
 document.getElementById('generate').addEventListener('click', performAction);
@@ -71,9 +72,9 @@ const updateUI = async () => {
     const request = await fetch('/fetchWeatherData') 
     try {
         const allData = await request.json()
-        document.getElementById('date').innerHTML = allData.date;
-        document.getElementById('temp').innerHTML = allData.temp + " degrees Fahrenheit";
-        document.getElementById('content').innerHTML = allData.content;    
+        document.getElementById('date').innerHTML = "Today's Date: " + allData.date;
+        document.getElementById('temp').innerHTML = "Temperature: " + allData.temp + "degrees Fahrenheit";
+        document.getElementById('content').innerHTML = "Your Feelings: " + allData.content;    
     }
     catch(error){
         console.log("error", error)
